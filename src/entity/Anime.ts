@@ -1,4 +1,4 @@
-import {Column,OneToMany,PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn,ManyToOne} from "typeorm";
+import {Column,OneToMany,ManyToOne,Entity} from "typeorm";
 import {Genre} from "./Genre";
 import {Season} from "./Season"
 import {Image} from "./Image"
@@ -6,13 +6,12 @@ import {Episode} from "./Episode"
 import {identification} from "./Identification"
 import {AnimesToMyList} from "./AnimesToMyList";
 
+
+@Entity()
 export class Anime extends identification{
 
     @Column()
     episode:number;
-
-    @Column()
-    genre_id:number;
 
     @Column()
     date:Date;

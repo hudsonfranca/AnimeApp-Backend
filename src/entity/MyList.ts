@@ -10,16 +10,13 @@ export class MyList {
     @Column()
     date: Date;
 
-    @Column()
-    user_id:number;
-
     @CreateDateColumn()
     created_at:Date;
 
     @UpdateDateColumn()
     updated_at:Date;
 
-    @OneToOne(type => User, user => user.myList) 
+    @OneToOne(type => User, user => user.myList,{onDelete:"CASCADE"}) 
     @JoinColumn()
     user: User;
 

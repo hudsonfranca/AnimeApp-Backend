@@ -8,10 +8,10 @@ export class EpisodeToHistory {
     public id!: number;
 
     @Column()
-    public episode_id!: number;
+    public episodeId!: number;
 
     @Column()
-    public hisroty_id!: number;
+    public historyId!: number;
 
     @Column()
     public date!: Date;
@@ -22,9 +22,13 @@ export class EpisodeToHistory {
     @UpdateDateColumn()
     updated_at:Date;
 
-    @ManyToOne(type => Episode, episode => episode.episodeToHistory)
+    @ManyToOne(type => Episode, episode => episode.episodeToHistory,{
+        onDelete:"CASCADE",
+    })
     public episode!: Episode;
 
-    @ManyToOne(type =>History, history => history.episodeToHistory)
+    @ManyToOne(type =>History, history => history.episodeToHistory,{
+        onDelete:"CASCADE", 
+    })
     public history!:History;
 }

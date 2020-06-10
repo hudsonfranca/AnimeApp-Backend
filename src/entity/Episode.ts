@@ -1,10 +1,10 @@
-import { History } from './History';
-import {Column,PrimaryGeneratedColumn,CreateDateColumn,OneToMany,UpdateDateColumn,ManyToOne,ManyToMany} from "typeorm";
+import {Entity,Column,PrimaryGeneratedColumn,CreateDateColumn,OneToMany,UpdateDateColumn,ManyToOne} from "typeorm";
 import {Anime} from "./Anime";
 import {Season} from "./Season";
 import {Comment} from "./Comment";
 import {EpisodeToHistory} from "./EpisodeToHistory";
 
+@Entity()
 export class Episode {
 
     @PrimaryGeneratedColumn()
@@ -13,22 +13,16 @@ export class Episode {
     @Column()
     url: string;
 
-    @Column()
-    anime_id:number;
-
-    @Column()
-    season_id:number;
-
     @CreateDateColumn()
     created_at:Date;
 
     @UpdateDateColumn()
     updated_at:Date;
 
-    @ManyToOne(type => Anime, anime=> anime.images)
+    @ManyToOne(type => Anime, anime=> anime.images,{onDelete:"CASCADE"})
     anime: Anime;
 
-    @ManyToOne(type => Season, season=> season.episodes)
+    @ManyToOne(type => Season, season=> season.episodes,{onDelete:"CASCADE"})
     season: Season;
 
     @OneToMany(type => Comment,comment =>comment.episode)

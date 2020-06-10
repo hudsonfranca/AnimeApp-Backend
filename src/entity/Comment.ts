@@ -10,22 +10,16 @@ export class Comment {
     @Column()
     content: string;
 
-    @Column()
-    episode_id:number;
-
-    @Column()
-    user_id:number;
-
     @CreateDateColumn()
     created_at:Date;
 
     @UpdateDateColumn()
     updated_at:Date;
 
-    @ManyToOne(type => Episode, episode=> episode.comments)
+    @ManyToOne(type => Episode, episode=> episode.comments,{onDelete:'CASCADE'})
     episode: Episode;
 
-    @ManyToOne(type => User, user=> user.comments)
+    @ManyToOne(type => User, user=> user.comments,{onDelete:'CASCADE'})
     user:User;
 
 

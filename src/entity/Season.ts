@@ -6,10 +6,8 @@ import {identification} from "./Identification";
 @Entity()
 export class Season extends identification{
 
-    @Column()
-    anime_id: number;
 
-    @ManyToOne(type => Anime, anime=> anime.season)
+    @ManyToOne(type => Anime, anime=> anime.season,{onDelete:"CASCADE"})
     anime: Anime;
 
     @OneToMany(type => Episode, episode =>episode.season)

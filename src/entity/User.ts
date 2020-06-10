@@ -1,5 +1,5 @@
 import { MyList } from './MyList';
-import {Entity,OneToOne,Column,OneToMany,JoinColumn} from "typeorm";
+import {Entity,OneToOne,Column,OneToMany} from "typeorm";
 import {identification} from "./Identification";
 import {Comment} from "./Comment";
 import {History} from "./History";
@@ -16,9 +16,9 @@ export class User extends identification{
    @OneToMany(type => Comment, comment =>comment.user)
    comments: Comment[];
 
-   @OneToOne(type => History, history => history.user) // specify inverse side as a second parameter
+   @OneToOne(type => History, history => history.user)
    history: History;
 
-   @OneToOne(type => MyList, myList => myList.user) // specify inverse side as a second parameter
+   @OneToOne(type => MyList, myList => myList.user) 
     myList: MyList;
 }

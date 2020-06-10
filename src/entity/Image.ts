@@ -1,7 +1,8 @@
-import {Column,PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn,ManyToOne} from "typeorm";
+import {Column,Entity,PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn,ManyToOne} from "typeorm";
 import {Anime} from "./Anime";
 
 
+@Entity()
 export class Image {
 
     @PrimaryGeneratedColumn()
@@ -10,16 +11,13 @@ export class Image {
     @Column()
     url: string;
 
-    @Column()
-    anime_id:number;
-
     @CreateDateColumn()
     created_at:Date;
 
     @UpdateDateColumn()
     updated_at:Date;
 
-    @ManyToOne(type => Anime, anime=> anime.images)
+    @ManyToOne(type => Anime, anime=> anime.images,{onDelete:"CASCADE"})
     anime: Anime;
 
    

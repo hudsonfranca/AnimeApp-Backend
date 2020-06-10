@@ -8,10 +8,10 @@ export class AnimesToMyList {
     public id!: number;
 
     @Column()
-    public anime_id!: number;
+    public animeId!: number;
 
     @Column()
-    public myList_id!: number;
+    public myListId!: number;
 
     @Column()
     public date!: Date;
@@ -22,9 +22,9 @@ export class AnimesToMyList {
     @UpdateDateColumn()
     updated_at:Date;
 
-    @ManyToOne(type => Anime,anime => anime.animesToMyList)
+    @ManyToOne(type => Anime,anime => anime.animesToMyList,{onDelete:"CASCADE"})
     public anime!: Anime;
 
-    @ManyToOne(type => MyList, myList => myList.animesToMyList)
+    @ManyToOne(type => MyList, myList => myList.animesToMyList,{onDelete:"CASCADE"})
     public myList!:MyList;
 }
