@@ -5,7 +5,8 @@
         "module": "CommonJS",
         "moduleResolution": "node",
         "esModuleInterop": true,
-        "outDir": "./build",
+        "outDir": "./dist",
+        "rootDir": "./src",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "sourceMap": true

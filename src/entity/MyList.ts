@@ -1,26 +1,34 @@
-import {Entity,JoinColumn,OneToMany,OneToOne,Column,PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn} from "typeorm";
-import {AnimesToMyList} from "./AnimesToMyList";
-import {User} from "./User";
+import {
+    Entity,
+    JoinColumn,
+    OneToMany,
+    OneToOne,
+    Column,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    UpdateDateColumn,
+} from 'typeorm';
+import AnimesToMyList from './AnimesToMyList';
+import Users from './User';
 
 @Entity()
-export class MyList {
+export default class MyList {
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
 
     @Column()
     date: Date;
 
     @CreateDateColumn()
-    created_at:Date;
+    createdAt: Date;
 
     @UpdateDateColumn()
-    updated_at:Date;
+    updatedAt: Date;
 
-    @OneToOne(type => User, user => user.myList,{onDelete:"CASCADE"}) 
+    @OneToOne(type => Users, user => user.myList, { onDelete: 'CASCADE' })
     @JoinColumn()
-    user: User;
+    user: Users;
 
     @OneToMany(type => AnimesToMyList, animesToMyList => animesToMyList.myList)
     public animesToMyList!: AnimesToMyList[];
-
 }

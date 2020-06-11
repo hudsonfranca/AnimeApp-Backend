@@ -1,17 +1,20 @@
-import {Column,PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn} from "typeorm";
+import {
+    Column,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 
-
-export class identification {
+export default class identification {
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
 
     @Column()
     name: string;
 
     @CreateDateColumn()
-    created_at:Date;
+    createdAt: Date;
 
     @UpdateDateColumn()
-    updated_at:Date;
-
+    updatedAt: Date;
 }

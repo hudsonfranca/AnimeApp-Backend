@@ -1,27 +1,33 @@
-import {Entity,ManyToOne,Column,PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn} from "typeorm";
-import {Episode} from "./Episode";
-import {User} from "./User";
+import {
+    Entity,
+    ManyToOne,
+    Column,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    UpdateDateColumn,
+} from 'typeorm';
+import Episode from './Episode';
+import Users from './User';
 
 @Entity()
-export class Comment {
+export default class Comment {
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
 
     @Column()
     content: string;
 
     @CreateDateColumn()
-    created_at:Date;
+    createdAt: Date;
 
     @UpdateDateColumn()
-    updated_at:Date;
+    updatedAt: Date;
 
-    @ManyToOne(type => Episode, episode=> episode.comments,{onDelete:'CASCADE'})
+    @ManyToOne(type => Episode, episode => episode.comments, {
+        onDelete: 'CASCADE',
+    })
     episode: Episode;
 
-    @ManyToOne(type => User, user=> user.comments,{onDelete:'CASCADE'})
-    user:User;
-
-
-
+    @ManyToOne(type => Users, user => user.comments, { onDelete: 'CASCADE' })
+    user: Users;
 }

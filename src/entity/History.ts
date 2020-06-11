@@ -1,23 +1,33 @@
-import {Entity,Column,PrimaryGeneratedColumn,OneToMany,CreateDateColumn,UpdateDateColumn,OneToOne,JoinColumn} from "typeorm";
-import {User} from "./User";
-import {EpisodeToHistory} from "./EpisodeToHistory";
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    OneToMany,
+    CreateDateColumn,
+    UpdateDateColumn,
+    OneToOne,
+    JoinColumn,
+} from 'typeorm';
+import Users from './User';
+import EpisodeToHistory from './EpisodeToHistory';
 
 @Entity()
-export class History{
-
+export default class History {
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
 
     @CreateDateColumn()
-    created_at:Date;
+    createdAt: Date;
 
     @UpdateDateColumn()
-    updated_at:Date;
+    updatedAt: Date;
 
-    @OneToOne(type => User, user => user.history,{onDelete:"CASCADE"}) 
+    @OneToOne(type => Users, user => user.history, { onDelete: 'CASCADE' })
     @JoinColumn()
-    user: User;
+    user: Users;
 
-    @OneToMany(type => EpisodeToHistory, episodeToHistory => episodeToHistory.history)
+    @OneToMany(
+        type => EpisodeToHistory,
+        episodeToHistory => episodeToHistory.history,
+    )
     public episodeToHistory!: EpisodeToHistory[];
 }

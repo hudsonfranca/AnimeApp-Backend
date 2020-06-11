@@ -1,9 +1,16 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn } from "typeorm";
-import { Anime } from "./Anime";
-import { MyList} from "./MyList";
+import {
+    Entity,
+    Column,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    UpdateDateColumn,
+} from 'typeorm';
+import Anime from './Anime';
+import MyList from './MyList';
 
 @Entity()
-export class AnimesToMyList {
+export default class AnimesToMyList {
     @PrimaryGeneratedColumn()
     public id!: number;
 
@@ -17,14 +24,18 @@ export class AnimesToMyList {
     public date!: Date;
 
     @CreateDateColumn()
-    created_at:Date;
+    createdAt: Date;
 
     @UpdateDateColumn()
-    updated_at:Date;
+    updatedAt: Date;
 
-    @ManyToOne(type => Anime,anime => anime.animesToMyList,{onDelete:"CASCADE"})
+    @ManyToOne(type => Anime, anime => anime.animesToMyList, {
+        onDelete: 'CASCADE',
+    })
     public anime!: Anime;
 
-    @ManyToOne(type => MyList, myList => myList.animesToMyList,{onDelete:"CASCADE"})
-    public myList!:MyList;
+    @ManyToOne(type => MyList, myList => myList.animesToMyList, {
+        onDelete: 'CASCADE',
+    })
+    public myList!: MyList;
 }

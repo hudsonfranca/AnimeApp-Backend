@@ -1,9 +1,16 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn } from "typeorm";
-import { Episode } from "./Episode";
-import { History} from "./History";
+import {
+    Entity,
+    Column,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    UpdateDateColumn,
+} from 'typeorm';
+import Episode from './Episode';
+import History from './History';
 
 @Entity()
-export class EpisodeToHistory {
+export default class EpisodeToHistory {
     @PrimaryGeneratedColumn()
     public id!: number;
 
@@ -17,18 +24,18 @@ export class EpisodeToHistory {
     public date!: Date;
 
     @CreateDateColumn()
-    created_at:Date;
+    createdAt: Date;
 
     @UpdateDateColumn()
-    updated_at:Date;
+    updatedAt: Date;
 
-    @ManyToOne(type => Episode, episode => episode.episodeToHistory,{
-        onDelete:"CASCADE",
+    @ManyToOne(type => Episode, episode => episode.episodeToHistory, {
+        onDelete: 'CASCADE',
     })
     public episode!: Episode;
 
-    @ManyToOne(type =>History, history => history.episodeToHistory,{
-        onDelete:"CASCADE", 
+    @ManyToOne(type => History, history => history.episodeToHistory, {
+        onDelete: 'CASCADE',
     })
-    public history!:History;
+    public history!: History;
 }

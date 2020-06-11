@@ -1,8 +1,13 @@
-import { Router, Request, Response } from 'express';
+import { Router,Request,Response } from 'express';
+import {saveUser} from "./controller/UserController";
 
 const routes = Router();
 
-routes.get('/', (req:Request, res:Response) => res.json({ message: 'Hello World!' }));
+ routes.post('/user',saveUser);
 
+
+routes.get('/', (req:Request,res:Response)=>{
+    return res.json("Hello world 2!!")
+});
 
 export default routes;
