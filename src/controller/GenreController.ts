@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
 import Genre from '../entity/Genre';
 
-export async function saveGenre(req: Request, res: Response) {
+export async function store(req: Request, res: Response) {
     const { name } = req.body;
 
     try {
@@ -15,4 +15,4 @@ export async function saveGenre(req: Request, res: Response) {
     }
 }
 
-export default { saveGenre };
+export default { store };

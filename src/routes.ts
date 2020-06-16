@@ -1,13 +1,13 @@
 import { Router, Request, Response } from 'express';
 import multer from 'multer';
-import { saveUser } from './controller/UserController';
+import UserController from './controller/UserController';
 import login from './controller/LoginController';
 import auth from './middleware/auth';
 import multerConfig from './config/multer';
-import { saveEpisode } from './controller/EpisodeController';
-import { saveAnime } from './controller/AnimeController';
-import { saveSeason } from './controller/SeasonController';
-import { saveGenre } from './controller/GenreController';
+import EpisodeController from './controller/EpisodeController';
+import AnimeController from './controller/AnimeController';
+import SeasonController from './controller/SeasonController';
+import GenreController from './controller/GenreController';
 
 const upload = multer(multerConfig);
 
@@ -17,7 +17,14 @@ interface customRequest extends Request {
 
 const routes = Router();
 
-routes.post('/user', saveUser);
+routes.post('/user', UserController.store);
+
+routes.get('/user', UserController.index);
+
+routes.get('/user/:id', UserController.show);
+
+routes.delete('/user/:id', UserController.Delete);
+routes.put('/user/:id', UserController.update);
 
 routes.get('/', auth, (req: customRequest, res: Response) => {
     const { sub } = req;
@@ -26,12 +33,12 @@ routes.get('/', auth, (req: customRequest, res: Response) => {
 
 routes.post('/users/login', login);
 
-routes.post('/episode', upload.single('episode'), saveEpisode);
+routes.post('/episode', upload.single('episode'), EpisodeController.store);
 
-routes.post('/anime', saveAnime);
+routes.post('/anime', AnimeController.store);
 
-routes.post('/season', saveSeason);
+routes.post('/season', SeasonController.store);
 
-routes.post('/genre', saveGenre);
+routes.post('/genre', GenreController.store);
 
 export default routes;

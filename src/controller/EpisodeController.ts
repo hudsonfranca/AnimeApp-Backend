@@ -4,7 +4,7 @@ import Episode from '../entity/Episode';
 import Anime from '../entity/Anime';
 import Season from '../entity/Season';
 
-export async function saveEpisode(req: Request, res: Response) {
+export async function store(req: Request, res: Response) {
     const { originalname: name, filename: path } = req.file;
     const { animeId, seasonId } = req.body;
 
@@ -36,4 +36,4 @@ export async function saveEpisode(req: Request, res: Response) {
     }
 }
 
-export default { saveEpisode };
+export default { store };

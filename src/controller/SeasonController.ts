@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import Season from '../entity/Season';
 import Anime from '../entity/Anime';
 
-export async function saveSeason(req: Request, res: Response) {
+export async function store(req: Request, res: Response) {
     const { name, animeId } = req.body;
 
     const anime = await getRepository(Anime).findOne({ id: animeId });
@@ -24,4 +24,4 @@ export async function saveSeason(req: Request, res: Response) {
         res.status(400).json(err);
     }
 }
-export default { saveSeason };
+export default { store };

@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import Anime from '../entity/Anime';
 import Genre from '../entity/Genre';
 
-export async function saveAnime(req: Request, res: Response) {
+export async function store(req: Request, res: Response) {
     const { name, episode, description, genreId, date } = req.body;
 
     const genre = await getRepository(Genre).findOne({ id: genreId });
@@ -25,4 +25,4 @@ export async function saveAnime(req: Request, res: Response) {
         res.status(400).json(err);
     }
 }
-export default { saveAnime };
+export default { store };

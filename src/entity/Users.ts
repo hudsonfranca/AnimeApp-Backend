@@ -6,7 +6,10 @@ import {
     OneToMany,
     CreateDateColumn,
     UpdateDateColumn,
+    BeforeInsert,
+    BeforeUpdate,
 } from 'typeorm';
+import bcrypt from 'bcrypt';
 import MyList from './MyList';
 import Comment from './Comment';
 import History from './History';
@@ -21,6 +24,16 @@ export default class Users {
 
     @Column()
     password: string;
+
+    @BeforeInsert()
+    setHashPassword(): void {
+        this.password = bcrypt.hashSync(this.password, 10);
+    }
+
+    @BeforeUpdate()
+    setHashPasswordUpdate(): void {
+        this.password = bcrypt.hashSync(this.password, 10);
+    }
 
     @CreateDateColumn()
     createdAt: Date;

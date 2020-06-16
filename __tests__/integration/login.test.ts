@@ -5,14 +5,15 @@ import { hashPassword } from '../../src/util';
 import connectionDB, { closeDatabaseConn } from '../../src/database/database';
 import app from '../../src/app';
 
-describe('Authentication', () => {
-    beforeEach(async () => {
-        await connectionDB();
-    });
+beforeEach(async () => {
+    await connectionDB();
+});
 
-    afterEach(async () => {
-        await closeDatabaseConn();
-    });
+afterEach(async () => {
+    await closeDatabaseConn();
+});
+
+describe('Authentication', () => {
     it('The user must be authenticated if the password is correct.', async () => {
         const password = hashPassword('1234567');
         const user = await getRepository(Users).save({
