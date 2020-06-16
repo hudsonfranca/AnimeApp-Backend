@@ -9,7 +9,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import AnimesToMyList from './AnimesToMyList';
-import Users from './User';
+import Users from './Users';
 
 @Entity()
 export default class MyList {
@@ -25,7 +25,10 @@ export default class MyList {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @OneToOne(type => Users, user => user.myList, { onDelete: 'CASCADE' })
+    @OneToOne(type => Users, user => user.myList, {
+        onDelete: 'CASCADE',
+        nullable: false,
+    })
     @JoinColumn()
     user: Users;
 

@@ -7,7 +7,7 @@ import {
     OneToOne,
     JoinColumn,
 } from 'typeorm';
-import Users from './User';
+import Users from './Users';
 import EpisodeToHistory from './EpisodeToHistory';
 
 @Entity()
@@ -21,7 +21,10 @@ export default class History {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @OneToOne(type => Users, user => user.history, { onDelete: 'CASCADE' })
+    @OneToOne(type => Users, user => user.history, {
+        onDelete: 'CASCADE',
+        nullable: false,
+    })
     @JoinColumn()
     user: Users;
 

@@ -31,11 +31,13 @@ export default class EpisodeToHistory {
 
     @ManyToOne(type => Episode, episode => episode.episodeToHistory, {
         onDelete: 'CASCADE',
+        nullable: false,
     })
     public episode!: Episode;
 
     @ManyToOne(type => History, history => history.episodeToHistory, {
         onDelete: 'CASCADE',
+        nullable: false,
     })
     public history!: History;
 }

@@ -1,5 +1,24 @@
 [
     {
+        "name": "default",
+        "type": "postgres",
+        "host": "localhost",
+        "port": 5432,
+        "username": "postgres",
+        "password": "admin",
+        "database": "AnimeDB",
+        "synchronize": false,
+        "logging": false,
+        "entities": ["src/entity/**/*.ts"],
+        "migrations": ["src/migration/**/*.ts"],
+        "subscribers": ["src/subscriber/**/*.ts"],
+        "cli": {
+            "entitiesDir": "src/entity",
+            "migrationsDir": "src/migration",
+            "subscribersDir": "src/subscriber"
+        }
+    },
+    {
         "name": "development",
         "type": "postgres",
         "host": "localhost",
@@ -27,7 +46,7 @@
         "password": "admin",
         "database": "animedbtest",
         "synchronize": true,
-        "logging": true,
+        "logging": false,
         "dropSchema": "true",
         "entities": ["src/entity/**/*.ts"],
         "migrations": ["src/migration/**/*.ts"],

@@ -6,6 +6,7 @@ import {
     OneToMany,
     UpdateDateColumn,
     ManyToOne,
+    AfterLoad,
 } from 'typeorm';
 import Anime from './Anime';
 import Season from './Season';
@@ -18,19 +19,35 @@ export default class Episode {
     id: number;
 
     @Column()
+    name: string;
+
     url: string;
+
+    @Column()
+    path: string;
 
     @CreateDateColumn()
     createdAt: Date;
 
+    @AfterLoad()
+    setUrl(): void {
+        this.url = `http://localhost:${process.env.PORT || 3000}/files/${
+            this.path
+        }`;
+    }
+
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @ManyToOne(type => Anime, anime => anime.images, { onDelete: 'CASCADE' })
+    @ManyToOne(type => Anime, anime => anime.images, {
+        onDelete: 'CASCADE',
+        nullable: false,
+    })
     anime: Anime;
 
     @ManyToOne(type => Season, season => season.episodes, {
         onDelete: 'CASCADE',
+        nullable: false,
     })
     season: Season;
 

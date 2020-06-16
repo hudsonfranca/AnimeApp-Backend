@@ -31,11 +31,13 @@ export default class AnimesToMyList {
 
     @ManyToOne(type => Anime, anime => anime.animesToMyList, {
         onDelete: 'CASCADE',
+        nullable: false,
     })
     public anime!: Anime;
 
     @ManyToOne(type => MyList, myList => myList.animesToMyList, {
         onDelete: 'CASCADE',
+        nullable: false,
     })
     public myList!: MyList;
 }

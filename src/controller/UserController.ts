@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
 import joi from 'joi';
-import Users from '../entity/User';
+import Users from '../entity/Users';
 import { hashPassword } from '../util';
 
 const userSchema = joi.object().keys({

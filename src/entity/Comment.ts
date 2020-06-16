@@ -7,7 +7,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import Episode from './Episode';
-import Users from './User';
+import Users from './Users';
 
 @Entity()
 export default class Comment {
@@ -25,9 +25,13 @@ export default class Comment {
 
     @ManyToOne(type => Episode, episode => episode.comments, {
         onDelete: 'CASCADE',
+        nullable: false,
     })
     episode: Episode;
 
-    @ManyToOne(type => Users, user => user.comments, { onDelete: 'CASCADE' })
+    @ManyToOne(type => Users, user => user.comments, {
+        onDelete: 'CASCADE',
+        nullable: false,
+    })
     user: Users;
 }

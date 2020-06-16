@@ -22,6 +22,9 @@ export default class Image {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @ManyToOne(type => Anime, anime => anime.images, { onDelete: 'CASCADE' })
+    @ManyToOne(type => Anime, anime => anime.images, {
+        onDelete: 'CASCADE',
+        nullable: false,
+    })
     anime: Anime;
 }

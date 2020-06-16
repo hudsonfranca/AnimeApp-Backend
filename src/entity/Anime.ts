@@ -20,7 +20,11 @@ export default class Anime extends identification {
 
     @Column({ length: 2000 }) description: string;
 
-    @ManyToOne(type => Genre, genre => genre.anime) genre: Genre;
+    @ManyToOne(type => Genre, genre => genre.anime, {
+        nullable: false,
+        onDelete: 'CASCADE',
+    })
+    genre: Genre;
 
     @OneToMany(type => Season, season => season.anime) season: Season[];
 

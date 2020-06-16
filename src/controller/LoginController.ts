@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import joi from 'joi';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import Users from '../entity/User';
+import Users from '../entity/Users';
 
 export default async function login(req: Request, res: Response) {
     const { email, password } = req.body;
