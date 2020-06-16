@@ -1,3 +1,3 @@
-import app from './app';
+import { listen } from './app';
 
-app.listen();
+listen();

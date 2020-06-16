@@ -17,12 +17,10 @@ interface customRequest extends Request {
 
 const routes = Router();
 
+// USER ROUTES//
 routes.post('/user', UserController.store);
-
 routes.get('/user', UserController.index);
-
 routes.get('/user/:id', UserController.show);
-
 routes.delete('/user/:id', UserController.Delete);
 routes.put('/user/:id', UserController.update);
 
@@ -31,14 +29,23 @@ routes.get('/', auth, (req: customRequest, res: Response) => {
     return res.json(sub);
 });
 
+// LOGIN ROUTES//
 routes.post('/users/login', login);
 
+// EPISODE ROUTES//
 routes.post('/episode', upload.single('episode'), EpisodeController.store);
 
+// ANIME ROUTES//
 routes.post('/anime', AnimeController.store);
+routes.get('/anime', AnimeController.index);
+routes.get('/anime/:id', AnimeController.show);
+routes.delete('/anime/:id', AnimeController.Delete);
+routes.put('/anime/:id', AnimeController.update);
 
+// SEASON ROUTES//
 routes.post('/season', SeasonController.store);
 
+// GENRE ROUTES//
 routes.post('/genre', GenreController.store);
 
 export default routes;

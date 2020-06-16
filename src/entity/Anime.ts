@@ -7,16 +7,12 @@ import Season from './Season';
 import Image from './Image';
 
 import Episode from './Episode';
-
 import identification from './identification';
-
 import AnimesToMyList from './AnimesToMyList';
 
 @Entity()
 export default class Anime extends identification {
-    @Column() episode: number;
-
-    @Column() date: Date;
+    @Column() debutDate: Date;
 
     @Column({ length: 2000 }) description: string;
 

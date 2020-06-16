@@ -5,7 +5,7 @@ import path from 'path';
 import Routes from './routes';
 import connectionDB from './database/database';
 
-const app = express();
+export const app = express();
 
 app.use(bodyParser.json());
 app.use(
@@ -14,7 +14,7 @@ app.use(
 );
 app.use(Routes);
 
-const listen = async () => {
+export const listen = async () => {
     await connectionDB();
 
     app.listen(process.env.PORT || 3000, () => {
@@ -23,6 +23,6 @@ const listen = async () => {
 };
 
 export default {
-    getApp: () => app,
+    app,
     listen,
 };
