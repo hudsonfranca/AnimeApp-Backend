@@ -34,6 +34,9 @@ routes.post('/users/login', login);
 
 // EPISODE ROUTES//
 routes.post('/episode', upload.single('episode'), EpisodeController.store);
+routes.get('/episode', EpisodeController.index);
+routes.get('/episode/:id', EpisodeController.show);
+routes.delete('/episode/:id', EpisodeController.Delete);
 
 // ANIME ROUTES//
 routes.post('/anime', AnimeController.store);

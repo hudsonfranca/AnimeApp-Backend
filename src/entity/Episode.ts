@@ -7,7 +7,10 @@ import {
     UpdateDateColumn,
     ManyToOne,
     AfterLoad,
+    AfterRemove,
 } from 'typeorm';
+import path from 'path';
+import fs from 'fs';
 import Anime from './Anime';
 import Season from './Season';
 import Comment from './Comment';
@@ -34,6 +37,25 @@ export default class Episode {
         this.url = `http://localhost:${process.env.PORT || 3000}/files/${
             this.path
         }`;
+    }
+
+    @AfterRemove()
+    deleteEpisode(): void {
+        const episodePath = `${path.resolve(
+            __dirname,
+            '..',
+            '..',
+            '.',
+            'temp',
+            '.',
+            'uploads',
+            `${this.path}`,
+        )}`;
+        try {
+            fs.unlinkSync(episodePath);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     @UpdateDateColumn()

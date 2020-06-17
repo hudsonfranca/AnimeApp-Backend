@@ -10,7 +10,7 @@ export async function update(req: Request, res: Response) {
     try {
         const season = await getRepository(Season).findOne(id);
         if (!season) {
-            res.status(404).json();
+            res.status(404).json({ error: `Season ${id} does not exist` });
         } else {
             season.name = name;
             await getRepository(Season).update(season.id, season);
@@ -27,10 +27,10 @@ export async function Delete(req: Request, res: Response) {
     try {
         const season = await getRepository(Season).findOne(id);
         if (!season) {
-            res.status(404).json();
+            res.status(404).json({ error: `Season ${id} does not exist` });
         } else {
             await getRepository(Season).delete(season.id);
-            res.status(200).json();
+            res.status(204).json();
         }
     } catch (err) {
         res.status(400).json(err);
