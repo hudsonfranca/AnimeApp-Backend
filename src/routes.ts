@@ -54,5 +54,9 @@ routes.put('/season/:id', SeasonController.update);
 
 // GENRE ROUTES//
 routes.post('/genre', GenreController.store);
+routes.get('/genre', GenreController.index);
+routes.get('/genre/:id', GenreController.show);
+routes.delete('/genre/:id', GenreController.Delete);
+routes.put('/genre/:id', GenreController.update);
 
 export default routes;

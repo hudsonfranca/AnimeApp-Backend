@@ -65,7 +65,7 @@ export async function show(req: Request, res: Response) {
     try {
         const user = await getRepository(Users).findOne(id);
         if (!user) {
-            res.status(404).json();
+            res.status(404).json({ error: `User ${id} does not exist` });
         }
         res.status(200).json(user);
     } catch (err) {

@@ -26,7 +26,9 @@ export async function show(req: Request, res: Response) {
     try {
         const episodes = await getRepository(Episode).findOne(id);
         if (!episodes) {
-            return res.status(404).json();
+            return res
+                .status(404)
+                .json({ error: `Episode ${id} does not exist` });
         }
         return res.status(200).json(episodes);
     } catch (err) {

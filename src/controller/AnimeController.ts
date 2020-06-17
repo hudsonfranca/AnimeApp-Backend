@@ -77,7 +77,7 @@ export async function show(req: Request, res: Response) {
             relations: ['season', 'season.episodes'],
         });
         if (!anime) {
-            res.status(404).json();
+            res.status(404).json({ error: `Anime ${id} does not exist` });
         } else {
             res.status(200).json(anime);
         }

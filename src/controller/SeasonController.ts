@@ -1,7 +1,13 @@
 import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
+import joi from 'joi';
 import Season from '../entity/Season';
 import Anime from '../entity/Anime';
+
+const seasonSchema = joi.object().keys({
+    name: joi.string().required(),
+    animeId: joi.number().required(),
+});
 
 export async function update(req: Request, res: Response) {
     const { id } = req.params;
@@ -43,7 +49,7 @@ export async function show(req: Request, res: Response) {
         const seasons = await getRepository(Season).findOne(id);
 
         if (!seasons) {
-            res.status(404).json();
+            res.status(404).json({ error: `Season ${id} does not exist` });
         } else {
             return res.status(200).json(seasons);
         }
@@ -67,6 +73,13 @@ export async function index(req: Request, res: Response) {
 }
 
 export async function store(req: Request, res: Response) {
+    const { value, error } = joi.validate(req.body, seasonSchema);
+
+    if (error) {
+        res.status(422).json({
+            error: error.details[0].message,
+        });
+    }
     const { name, animeId } = req.body;
 
     const anime = await getRepository(Anime).findOne({ id: animeId });
