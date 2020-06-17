@@ -19,15 +19,17 @@ export default async function login(req: Request, res: Response) {
     try {
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) {
-            res.status(401).send('Not Allowed');
+            return res.status(401).send('Not Allowed');
         }
 
         const accessToken = jwt.sign(
             { sub: user.id },
             process.env.ACCESS_TOKEN_SECRET,
         );
-        return res.status(200).json({ accessToken });
+        if (accessToken) {
+            return res.status(200).json({ accessToken });
+        }
     } catch (error) {
-        res.status(500).json({ error });
+        return res.status(500).json({ error });
     }
 }

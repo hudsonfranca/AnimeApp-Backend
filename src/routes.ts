@@ -44,6 +44,10 @@ routes.put('/anime/:id', AnimeController.update);
 
 // SEASON ROUTES//
 routes.post('/season', SeasonController.store);
+routes.get('/season', SeasonController.index);
+routes.get('/season/:id', SeasonController.show);
+routes.delete('/season/:id', SeasonController.Delete);
+routes.put('/season/:id', SeasonController.update);
 
 // GENRE ROUTES//
 routes.post('/genre', GenreController.store);

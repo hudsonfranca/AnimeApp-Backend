@@ -72,11 +72,15 @@ export async function Delete(req: Request, res: Response) {
 export async function show(req: Request, res: Response) {
     const { id } = req.params;
     try {
-        const anime = await getRepository(Anime).findOne(id);
+        const anime = await getRepository(Anime).findOne({
+            where: { id },
+            relations: ['season', 'season.episodes'],
+        });
         if (!anime) {
             res.status(404).json();
+        } else {
+            res.status(200).json(anime);
         }
-        res.status(200).json(anime);
     } catch (err) {
         res.status(400).json(err);
     }
@@ -87,8 +91,9 @@ export async function index(req: Request, res: Response) {
         const anime = await getRepository(Anime).find();
         if (!anime) {
             res.status(404).json();
+        } else {
+            res.status(200).json(anime);
         }
-        res.status(200).json(anime);
     } catch (err) {
         res.status(400).json(err);
     }
