@@ -10,6 +10,7 @@ import SeasonController from './controller/SeasonController';
 import GenreController from './controller/GenreController';
 import HistoryController from './controller/HistoryController';
 import MyListController from './controller/MyListController';
+import ImagesController from './controller/ImagesController';
 
 const upload = multer(multerConfig);
 
@@ -68,5 +69,9 @@ routes.get('/history/:userId', HistoryController.show);
 // MY LIST ROUTES//
 routes.post('/mylist', MyListController.store);
 routes.get('/mylist/:userId', MyListController.show);
+
+// IMAGE ROUTES//
+routes.post('/image', upload.single('image'), ImagesController.store);
+routes.delete('/image/:id', ImagesController.Delete);
 
 export default routes;

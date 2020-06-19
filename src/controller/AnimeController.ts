@@ -74,7 +74,7 @@ export async function show(req: Request, res: Response) {
     try {
         const anime = await getRepository(Anime).findOne({
             where: { id },
-            relations: ['season', 'season.episodes'],
+            relations: ['season', 'images', 'season.episodes'],
         });
         if (!anime) {
             res.status(404).json({ error: `Anime ${id} does not exist` });
@@ -88,7 +88,9 @@ export async function show(req: Request, res: Response) {
 
 export async function index(req: Request, res: Response) {
     try {
-        const anime = await getRepository(Anime).find();
+        const anime = await getRepository(Anime).find({
+            relations: ['images'],
+        });
         if (!anime) {
             res.status(404).json();
         } else {
