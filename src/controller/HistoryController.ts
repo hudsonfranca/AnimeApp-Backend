@@ -1,6 +1,5 @@
 import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
-import joi from 'joi';
 import Users from '../entity/Users';
 import Episode from '../entity/Episode';
 import History from '../entity/History';
@@ -46,7 +45,11 @@ export async function store(req: Request, res: Response) {
     if (!history) {
         const historyEtity = new History();
         historyEtity.user = user;
-        history = await getRepository(History).save(historyEtity);
+        try {
+            history = await getRepository(History).save(historyEtity);
+        } catch (error) {
+            res.status(400).json(error);
+        }
     }
 
     try {

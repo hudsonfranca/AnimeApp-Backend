@@ -9,6 +9,7 @@ import AnimeController from './controller/AnimeController';
 import SeasonController from './controller/SeasonController';
 import GenreController from './controller/GenreController';
 import HistoryController from './controller/HistoryController';
+import MyListController from './controller/MyListController';
 
 const upload = multer(multerConfig);
 
@@ -63,5 +64,9 @@ routes.put('/genre/:id', GenreController.update);
 // HISTORY ROUTES//
 routes.post('/history', HistoryController.store);
 routes.get('/history/:userId', HistoryController.show);
+
+// MY LIST ROUTES//
+routes.post('/mylist', MyListController.store);
+routes.get('/mylist/:userId', MyListController.show);
 
 export default routes;

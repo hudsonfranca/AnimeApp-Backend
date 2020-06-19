@@ -1,12 +1,12 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class Initialize1592429379660 implements MigrationInterface {
-    name = 'Initialize1592429379660'
+export class Initialize1592590849441 implements MigrationInterface {
+    name = 'Initialize1592590849441'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "genre" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_0285d4f1655d080cfcf7d1ab141" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "animes_to_my_list" ("id" SERIAL NOT NULL, "animeId" integer NOT NULL, "myListId" integer NOT NULL, "date" TIMESTAMP NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_ff82355fa579df4df967cafc90e" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "my_list" ("id" SERIAL NOT NULL, "date" TIMESTAMP NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "userId" integer NOT NULL, CONSTRAINT "REL_f4d7e1646bfa49f54bcfd673e1" UNIQUE ("userId"), CONSTRAINT "PK_50948b2442eaf0beff5f787ba99" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "my_list" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "userId" integer NOT NULL, CONSTRAINT "REL_f4d7e1646bfa49f54bcfd673e1" UNIQUE ("userId"), CONSTRAINT "PK_50948b2442eaf0beff5f787ba99" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "episode_to_history" ("id" SERIAL NOT NULL, "episodeId" integer NOT NULL, "historyId" integer NOT NULL, "date" TIMESTAMP NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_a3eed4a0a68a512ad1279783b38" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "history" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "userId" integer NOT NULL, CONSTRAINT "REL_7d339708f0fa8446e3c4128dea" UNIQUE ("userId"), CONSTRAINT "PK_9384942edf4804b38ca0ee51416" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "users" ("id" SERIAL NOT NULL, "email" character varying NOT NULL, "password" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);

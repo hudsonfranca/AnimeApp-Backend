@@ -3,7 +3,6 @@ import {
     JoinColumn,
     OneToMany,
     OneToOne,
-    Column,
     PrimaryGeneratedColumn,
     CreateDateColumn,
     UpdateDateColumn,
@@ -15,9 +14,6 @@ import Users from './Users';
 export default class MyList {
     @PrimaryGeneratedColumn()
     id: number;
-
-    @Column()
-    date: Date;
 
     @CreateDateColumn()
     createdAt: Date;
