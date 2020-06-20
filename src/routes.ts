@@ -12,6 +12,7 @@ import HistoryController from './controller/HistoryController';
 import MyListController from './controller/MyListController';
 import ImagesController from './controller/ImagesController';
 import CommentController from './controller/CommentController';
+import ReplieController from './controller/ReplieController';
 
 const upload = multer(multerConfig);
 
@@ -79,5 +80,10 @@ routes.delete('/image/:id', ImagesController.Delete);
 routes.post('/comment', CommentController.store);
 routes.get('/comment/:episodeId', CommentController.show);
 routes.delete('/comment/:id', CommentController.Delete);
+
+// REPLIE ROUTES//
+routes.post('/replie', ReplieController.store);
+routes.get('/replie/:commentId', ReplieController.show);
+routes.delete('/replie/:id', ReplieController.Delete);
 
 export default routes;
