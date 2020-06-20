@@ -13,6 +13,7 @@ import bcrypt from 'bcrypt';
 import MyList from './MyList';
 import Comment from './Comment';
 import History from './History';
+import Replie from './Replie';
 
 @Entity()
 export default class Users {
@@ -43,6 +44,9 @@ export default class Users {
 
     @OneToMany(type => Comment, comment => comment.user)
     comments: Comment[];
+
+    @OneToMany(type => Replie, replie => replie.user)
+    replie: Replie[];
 
     @OneToOne(type => History, history => history.user)
     history: History;

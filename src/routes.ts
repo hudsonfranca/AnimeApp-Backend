@@ -11,6 +11,7 @@ import GenreController from './controller/GenreController';
 import HistoryController from './controller/HistoryController';
 import MyListController from './controller/MyListController';
 import ImagesController from './controller/ImagesController';
+import CommentController from './controller/CommentController';
 
 const upload = multer(multerConfig);
 
@@ -73,5 +74,10 @@ routes.get('/mylist/:userId', MyListController.show);
 // IMAGE ROUTES//
 routes.post('/image', upload.single('image'), ImagesController.store);
 routes.delete('/image/:id', ImagesController.Delete);
+
+// COMMENT ROUTES//
+routes.post('/comment', CommentController.store);
+routes.get('/comment/:episodeId', CommentController.show);
+routes.delete('/comment/:id', CommentController.Delete);
 
 export default routes;

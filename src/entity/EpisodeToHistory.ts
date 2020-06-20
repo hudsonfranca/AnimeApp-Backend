@@ -20,9 +20,6 @@ export default class EpisodeToHistory {
     @Column()
     public historyId!: number;
 
-    @Column()
-    public date!: Date;
-
     @CreateDateColumn()
     createdAt: Date;
 

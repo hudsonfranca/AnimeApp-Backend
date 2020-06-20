@@ -72,10 +72,7 @@ export async function Delete(req: Request, res: Response) {
 export async function show(req: Request, res: Response) {
     const { id } = req.params;
     try {
-        const anime = await getRepository(Anime).findOne({
-            where: { id },
-            relations: ['season', 'images', 'season.episodes'],
-        });
+        const anime = await getRepository(Anime).findOne(id);
         if (!anime) {
             res.status(404).json({ error: `Anime ${id} does not exist` });
         } else {

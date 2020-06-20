@@ -5,9 +5,11 @@ import {
     PrimaryGeneratedColumn,
     CreateDateColumn,
     UpdateDateColumn,
+    OneToMany,
 } from 'typeorm';
 import Episode from './Episode';
 import Users from './Users';
+import Replie from './Replie';
 
 @Entity()
 export default class Comment {
@@ -15,7 +17,7 @@ export default class Comment {
     id: number;
 
     @Column()
-    content: string;
+    body: string;
 
     @CreateDateColumn()
     createdAt: Date;
@@ -34,4 +36,7 @@ export default class Comment {
         nullable: false,
     })
     user: Users;
+
+    @OneToMany(type => Replie, replie => replie.comment)
+    replie: Replie[];
 }

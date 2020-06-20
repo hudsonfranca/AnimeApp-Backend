@@ -6,17 +6,25 @@ import History from '../entity/History';
 import EpisodeToHistory from '../entity/EpisodeToHistory';
 
 export async function show(req: Request, res: Response) {
-    const { userId: id } = req.params;
+    const { userId } = req.params;
+
+    const user = await getRepository(Users).findOne(userId);
+
+    if (!user) {
+        return res.status(400).json({ error: `User ${userId} does not exist` });
+    }
 
     try {
-        const userHistory = await getRepository(Users).findOne({
-            where: { id },
-            relations: ['history', 'history.episodeToHistory'],
-        });
-        if (!userHistory) {
+        const history = await getRepository(History)
+            .createQueryBuilder('history')
+            .leftJoinAndSelect('history.episodeToHistory', 'episode')
+            .where('history.user.id = :userId', { userId })
+            .getMany();
+
+        if (!history) {
             res.status(404).json();
         } else {
-            return res.status(200).json(userHistory);
+            return res.status(200).json(history);
         }
     } catch (error) {
         return res.status(400).json(error);
@@ -56,7 +64,6 @@ export async function store(req: Request, res: Response) {
         const episodeToHistoryEntity = new EpisodeToHistory();
         episodeToHistoryEntity.episode = episode;
         episodeToHistoryEntity.history = history;
-        episodeToHistoryEntity.date = new Date();
 
         const episodeToHistory = await getRepository(EpisodeToHistory).save(
             episodeToHistoryEntity,
