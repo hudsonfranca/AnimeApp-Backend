@@ -83,17 +83,33 @@ export async function show(req: Request, res: Response) {
     }
 }
 
+interface QueryProps {
+    limit: number;
+    offset: number;
+}
+
 export async function index(req: Request, res: Response) {
+    const { limit, offset } = req.query;
+
+    const limitNumber = parseInt(String(limit), 10);
+    const offsetNumber = parseInt(String(offset), 10);
+
     try {
-        const anime = await getRepository(Anime).find({
-            relations: ['images'],
-        });
+        const anime = await getRepository(Anime)
+            .createQueryBuilder('anime')
+            .leftJoinAndSelect('anime.images', 'image')
+            .take(limitNumber)
+            .skip(offsetNumber)
+            .orderBy('anime.createdAt', 'DESC')
+            .getMany();
+
         if (!anime) {
             res.status(404).json();
         } else {
             res.status(200).json(anime);
         }
     } catch (err) {
+        console.error(err);
         res.status(400).json(err);
     }
 }
