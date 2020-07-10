@@ -39,10 +39,18 @@ export async function show(req: Request, res: Response) {
 }
 
 export async function index(req: Request, res: Response) {
+    const { limit, offset } = req.query;
+
+    const limitNumber = parseInt(String(limit), 10);
+    const offsetNumber = parseInt(String(offset), 10);
     try {
-        const episodes = await getRepository(Episode).find({
-            relations: ['thumbnail'],
-        });
+        const episodes = await getRepository(Episode)
+            .createQueryBuilder('episode')
+            .leftJoinAndSelect('episode.thumbnail', 'thumbnail')
+            .take(limitNumber)
+            .skip(offsetNumber)
+            .orderBy('episode.createdAt', 'DESC')
+            .getMany();
         if (!episodes) {
             return res.status(404).json();
         }
