@@ -24,7 +24,9 @@ export async function Delete(req: Request, res: Response) {
 export async function show(req: Request, res: Response) {
     const { id } = req.params;
     try {
-        const episodes = await getRepository(Episode).findOne(id);
+        const episodes = await getRepository(Episode).findOne(id, {
+            relations: ['thumbnail'],
+        });
         if (!episodes) {
             return res
                 .status(404)
@@ -38,7 +40,9 @@ export async function show(req: Request, res: Response) {
 
 export async function index(req: Request, res: Response) {
     try {
-        const episodes = await getRepository(Episode).find();
+        const episodes = await getRepository(Episode).find({
+            relations: ['thumbnail'],
+        });
         if (!episodes) {
             return res.status(404).json();
         }

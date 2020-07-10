@@ -4,6 +4,7 @@
     "description": "Awesome project developed with TypeORM.",
     "devDependencies": {
         "@types/express": "^4.17.6",
+        "@types/fluent-ffmpeg": "^2.1.14",
         "@types/jest": "^26.0.0",
         "@types/jsonwebtoken": "^8.5.0",
         "@types/multer": "^1.4.3",
@@ -34,6 +35,7 @@
         "body-parser": "^1.18.1",
         "dotenv": "^8.2.0",
         "express": "^4.15.4",
+        "fluent-ffmpeg": "^2.1.2",
         "joi": "^14.3.1",
         "jsonwebtoken": "^8.5.1",
         "multer": "^1.4.2",

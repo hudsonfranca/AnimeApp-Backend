@@ -8,6 +8,7 @@ import {
     ManyToOne,
     AfterLoad,
     AfterRemove,
+    OneToOne,
 } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
@@ -15,6 +16,7 @@ import Anime from './Anime';
 import Season from './Season';
 import Comment from './Comment';
 import EpisodeToHistory from './EpisodeToHistory';
+import Thumbnail from './Thumbnail';
 
 @Entity()
 export default class Episode {
@@ -81,4 +83,7 @@ export default class Episode {
         episodeToHistory => episodeToHistory.episode,
     )
     public episodeToHistory!: EpisodeToHistory[];
+
+    @OneToOne(type => Thumbnail, thumbnail => thumbnail.episode) // specify inverse side as a second parameter
+    thumbnail: Thumbnail;
 }

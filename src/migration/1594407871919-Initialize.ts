@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export default class Initialize1592676102124 implements MigrationInterface {
-    name = 'Initialize1592676102124';
+export default class Initialize1594407871919 implements MigrationInterface {
+    name = 'Initialize1594407871919';
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(
@@ -27,6 +27,9 @@ export default class Initialize1592676102124 implements MigrationInterface {
         );
         await queryRunner.query(
             `CREATE TABLE "comment" ("id" SERIAL NOT NULL, "body" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "episodeId" integer NOT NULL, "userId" integer NOT NULL, CONSTRAINT "PK_0b0e4bbc8415ec426f87f3a88e2" PRIMARY KEY ("id"))`,
+        );
+        await queryRunner.query(
+            `CREATE TABLE "thumbnail" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "episodeId" integer NOT NULL, CONSTRAINT "REL_a9d6de8d00bbfe7ae84b03bfc3" UNIQUE ("episodeId"), CONSTRAINT "PK_12afcbe5bdad28526b88dbdaf3f" PRIMARY KEY ("id"))`,
         );
         await queryRunner.query(
             `CREATE TABLE "episode" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "path" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "animeId" integer NOT NULL, "seasonId" integer NOT NULL, CONSTRAINT "PK_7258b95d6d2bf7f621845a0e143" PRIMARY KEY ("id"))`,
@@ -71,6 +74,9 @@ export default class Initialize1592676102124 implements MigrationInterface {
             `ALTER TABLE "comment" ADD CONSTRAINT "FK_c0354a9a009d3bb45a08655ce3b" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
         );
         await queryRunner.query(
+            `ALTER TABLE "thumbnail" ADD CONSTRAINT "FK_a9d6de8d00bbfe7ae84b03bfc39" FOREIGN KEY ("episodeId") REFERENCES "episode"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
+        );
+        await queryRunner.query(
             `ALTER TABLE "episode" ADD CONSTRAINT "FK_969247f869e17aeb3bcd3c548f6" FOREIGN KEY ("animeId") REFERENCES "anime"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
         );
         await queryRunner.query(
@@ -102,6 +108,9 @@ export default class Initialize1592676102124 implements MigrationInterface {
         );
         await queryRunner.query(
             `ALTER TABLE "episode" DROP CONSTRAINT "FK_969247f869e17aeb3bcd3c548f6"`,
+        );
+        await queryRunner.query(
+            `ALTER TABLE "thumbnail" DROP CONSTRAINT "FK_a9d6de8d00bbfe7ae84b03bfc39"`,
         );
         await queryRunner.query(
             `ALTER TABLE "comment" DROP CONSTRAINT "FK_c0354a9a009d3bb45a08655ce3b"`,
@@ -137,6 +146,7 @@ export default class Initialize1592676102124 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE "image"`);
         await queryRunner.query(`DROP TABLE "season"`);
         await queryRunner.query(`DROP TABLE "episode"`);
+        await queryRunner.query(`DROP TABLE "thumbnail"`);
         await queryRunner.query(`DROP TABLE "comment"`);
         await queryRunner.query(`DROP TABLE "users"`);
         await queryRunner.query(`DROP TABLE "replie"`);
