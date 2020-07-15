@@ -25,7 +25,7 @@ export async function show(req: Request, res: Response) {
     const { id } = req.params;
     try {
         const episodes = await getRepository(Episode).findOne(id, {
-            relations: ['thumbnail'],
+            relations: ['thumbnail', 'anime', 'season'],
         });
         if (!episodes) {
             return res
@@ -39,22 +39,38 @@ export async function show(req: Request, res: Response) {
 }
 
 export async function index(req: Request, res: Response) {
-    const { limit, offset } = req.query;
+    const { take, skip } = req.query;
 
-    const limitNumber = parseInt(String(limit), 10);
-    const offsetNumber = parseInt(String(offset), 10);
+    const takeNumber = parseInt(String(take), 10);
+    const skipNumber = parseInt(String(skip), 10);
     try {
         const episodes = await getRepository(Episode)
             .createQueryBuilder('episode')
             .leftJoinAndSelect('episode.thumbnail', 'thumbnail')
-            .take(limitNumber)
-            .skip(offsetNumber)
+            .leftJoinAndSelect('episode.anime', 'anime')
+            .leftJoinAndSelect('episode.season', 'season')
+            .take(takeNumber)
+            .skip(skipNumber)
             .orderBy('episode.createdAt', 'DESC')
             .getMany();
+
+        const count = await getRepository(Episode)
+            .createQueryBuilder('episode')
+            .leftJoinAndSelect('episode.thumbnail', 'thumbnail')
+            .leftJoinAndSelect('episode.anime', 'anime')
+            .leftJoinAndSelect('episode.season', 'season')
+            .take(takeNumber)
+            .skip(skipNumber)
+            .orderBy('episode.createdAt', 'DESC')
+            .getCount();
+
         if (!episodes) {
             return res.status(404).json();
         }
-        return res.status(200).json(episodes);
+        if (!count) {
+            return res.status(404).json();
+        }
+        return res.status(200).json({ episodes, count });
     } catch (err) {
         return res.status(400).json(err);
     }

@@ -2,6 +2,7 @@ import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
 import joi from 'joi';
 import Users from '../entity/Users';
+import jwt from 'jsonwebtoken';
 
 const userSchema = joi.object().keys({
     email: joi.string().email().required(),
@@ -110,7 +111,15 @@ export async function store(req: Request, res: Response) {
         user.password = password;
 
         const userRepository = await getRepository(Users).save(user);
-        res.status(201).json(userRepository);
+
+        const accessToken = jwt.sign(
+            { sub: userRepository.id },
+            process.env.ACCESS_TOKEN_SECRET,
+        );
+        if (accessToken) {
+            return res.status(200).json({ accessToken });
+        }
+       
     } catch (err) {
         res.status(400).json(err);
     }
