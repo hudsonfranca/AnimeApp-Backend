@@ -5,21 +5,26 @@ import Episode from '../entity/Episode';
 import History from '../entity/History';
 import EpisodeToHistory from '../entity/EpisodeToHistory';
 
-export async function show(req: Request, res: Response) {
-    const { userId } = req.params;
+interface customRequest extends Request {
+    sub: any;
+}
 
-    const user = await getRepository(Users).findOne(userId);
+export async function show(req: customRequest, res: Response) {
+    const { sub } = req.sub;
+
+    const user = await getRepository(Users).findOne(sub);
 
     if (!user) {
-        return res.status(400).json({ error: `User ${userId} does not exist` });
+        return res.status(400).json({ error: `User ${sub} does not exist` });
     }
 
     try {
         const history = await getRepository(History)
             .createQueryBuilder('history')
-            .leftJoinAndSelect('history.episodeToHistory', 'episode')
-            .where('history.user.id = :userId', { userId })
-            .getMany();
+            .leftJoinAndSelect('history.episodeToHistory', 'episodeToHistory')
+            .leftJoinAndSelect('episodeToHistory.episode', 'episode')
+            .where('history.user.id = :userId', { userId: sub })
+            .getOne();
 
         if (!history) {
             res.status(404).json();
@@ -31,13 +36,14 @@ export async function show(req: Request, res: Response) {
     }
 }
 
-export async function store(req: Request, res: Response) {
-    const { userId, episodeId } = req.body;
+export async function store(req: customRequest, res: Response) {
+    const { episodeId } = req.body;
+    const { sub } = req.sub;
 
-    const user = await getRepository(Users).findOne(userId);
+    const user = await getRepository(Users).findOne(sub);
 
     if (!user) {
-        return res.status(400).json({ error: `User ${userId} does not exist` });
+        return res.status(400).json({ error: `User ${sub} does not exist` });
     }
 
     const episode = await getRepository(Episode).findOne(episodeId);
@@ -48,7 +54,7 @@ export async function store(req: Request, res: Response) {
             .json({ error: `Episode ${episodeId} does not exist` });
     }
 
-    let history = await getRepository(History).findOne(userId);
+    let history = await getRepository(History).findOne(sub);
 
     if (!history) {
         const historyEtity = new History();

@@ -5,21 +5,27 @@ import Anime from '../entity/Anime';
 import MyList from '../entity/MyList';
 import AnimesToMyList from '../entity/AnimesToMyList';
 
-export async function show(req: Request, res: Response) {
-    const { userId } = req.params;
+interface customRequest extends Request {
+    sub: any;
+}
 
-    const user = await getRepository(Users).findOne(userId);
+export async function show(req: customRequest, res: Response) {
+    const { sub } = req.sub;
+
+    const user = await getRepository(Users).findOne(sub);
 
     if (!user) {
-        return res.status(400).json({ error: `User ${userId} does not exist` });
+        return res.status(400).json({ error: `User ${sub} does not exist` });
     }
 
     try {
         const mylist = await getRepository(MyList)
             .createQueryBuilder('my_list')
-            .leftJoinAndSelect('my_list.animesToMyList', 'anime')
-            .where('my_list.user.id = :userId', { userId })
-            .getMany();
+            .leftJoinAndSelect('my_list.animesToMyList', 'animesToMyList')
+            .leftJoinAndSelect('animesToMyList.anime', 'anime')
+            .leftJoinAndSelect('anime.images', 'images')
+            .where('my_list.user.id = :userId', { userId: sub })
+            .getOne();
         if (!mylist) {
             res.status(404).json();
         } else {
@@ -30,9 +36,9 @@ export async function show(req: Request, res: Response) {
     }
 }
 
-export async function store(req: Request, res: Response) {
-    const { userId, animeId } = req.body;
-
+export async function store(req: customRequest, res: Response) {
+    const { animeId } = req.body;
+    const { sub: userId } = req.sub;
     const user = await getRepository(Users).findOne(userId);
 
     if (!user) {

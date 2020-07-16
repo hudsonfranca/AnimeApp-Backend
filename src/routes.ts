@@ -66,12 +66,12 @@ routes.delete('/genre/:id', GenreController.Delete);
 routes.put('/genre/:id', GenreController.update);
 
 // HISTORY ROUTES//
-routes.post('/history', HistoryController.store);
-routes.get('/history/:userId', HistoryController.show);
+routes.post('/history', auth, HistoryController.store);
+routes.get('/history', auth, HistoryController.show);
 
 // MY LIST ROUTES//
-routes.post('/mylist', MyListController.store);
-routes.get('/mylist/:userId', MyListController.show);
+routes.post('/mylist', auth, MyListController.store);
+routes.get('/mylist', auth, MyListController.show);
 
 // IMAGE ROUTES//
 routes.post('/image', upload.single('image'), ImagesController.store);
